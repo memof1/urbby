@@ -74,6 +74,8 @@
   .note .i{flex:none;font-weight:800;color:var(--warn)}
   .note.good{background:#eef7ee;border-color:#cbe6cb;color:#2c5230}
   .note.good .i{color:var(--good)}
+  .note.info{background:#eef4fd;border-color:#d3e2f8;color:#1c4a86}
+  .note.info .i{color:var(--s1)}
 
   .totgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .totcard{border:1px solid var(--border);border-radius:12px;padding:18px 20px}
@@ -107,7 +109,7 @@
       <span class="chip"><b>Moneda:</b> USD</span>
       <span class="chip"><b>Salarios:</b> mercado El Salvador / LatAm (competitivos)</span>
       <span class="chip"><b>Equipo:</b> 3 seniors (CTO, Fullstack, DevOps)</span>
-      <span class="chip"><b>Infra:</b> Hetzner → Google Cloud</span>
+      <span class="chip"><b>Infra:</b> Hetzner → Google Cloud + streaming</span>
       <span class="chip"><b>Elaborado:</b> agosto 2026</span>
     </div>
   </header>
@@ -116,17 +118,17 @@
   <div class="heroes">
     <div class="hero accent">
       <div class="k">Total Año 1 (precio de lista)</div>
-      <div class="v big num">$235,200</div>
-      <div class="cap">≈ $19,600 / mes promedio</div>
+      <div class="v big num">$243,000</div>
+      <div class="cap">≈ $20,200 / mes promedio</div>
     </div>
     <div class="hero">
       <div class="k">Total con créditos GCP</div>
-      <div class="v num" style="color:var(--good)">$218,700</div>
+      <div class="v num" style="color:var(--good)">$226,500</div>
       <div class="cap">si aplican a Google for Startups</div>
     </div>
     <div class="hero">
       <div class="k">Peso del talento</div>
-      <div class="v num">78%</div>
+      <div class="v num">76%</div>
       <div class="cap">del presupuesto es personal</div>
     </div>
   </div>
@@ -134,18 +136,18 @@
   <!-- DISTRIBUTION -->
   <section>
     <h2>Distribución del presupuesto</h2>
-    <p class="lead">Como en casi toda empresa de software, el equipo es el costo dominante. Infraestructura y herramientas juntas son ~13%.</p>
+    <p class="lead">Como en casi toda empresa de software, el equipo es el costo dominante. Infraestructura y herramientas juntas son ~15%.</p>
     <div class="barwrap">
-      <div class="seg" style="width:78.4%;background:var(--s1)" title="Personal · $184,320 · 78.4%"></div>
-      <div class="seg" style="width:9.2%;background:var(--s2)" title="Infraestructura · $21,700 · 9.2%"></div>
-      <div class="seg" style="width:3.3%;background:var(--s3)" title="Herramientas / SaaS · $7,784 · 3.3%"></div>
-      <div class="seg" style="width:9.1%;background:var(--s4)" title="Contingencia 10% · $21,380 · 9.1%"></div>
+      <div class="seg" style="width:75.9%;background:var(--s1)" title="Personal · $184,320 · 75.9%"></div>
+      <div class="seg" style="width:11.8%;background:var(--s2)" title="Infraestructura · $28,780 · 11.8%"></div>
+      <div class="seg" style="width:3.2%;background:var(--s3)" title="Herramientas / SaaS · $7,784 · 3.2%"></div>
+      <div class="seg" style="width:9.1%;background:var(--s4)" title="Contingencia 10% · $22,088 · 9.1%"></div>
     </div>
     <div class="legend">
       <div class="it"><span class="swatch" style="background:var(--s1)"></span>Personal <span class="amt num">· $184,320</span></div>
-      <div class="it"><span class="swatch" style="background:var(--s2)"></span>Infraestructura <span class="amt num">· $21,700</span></div>
+      <div class="it"><span class="swatch" style="background:var(--s2)"></span>Infraestructura <span class="amt num">· $28,780</span></div>
       <div class="it"><span class="swatch" style="background:var(--s3)"></span>Herramientas <span class="amt num">· $7,784</span></div>
-      <div class="it"><span class="swatch" style="background:var(--s4)"></span>Contingencia <span class="amt num">· $21,380</span></div>
+      <div class="it"><span class="swatch" style="background:var(--s4)"></span>Contingencia <span class="amt num">· $22,088</span></div>
     </div>
   </section>
 
@@ -170,7 +172,7 @@
 
   <!-- INFRA -->
   <section>
-    <h2>2 · Infraestructura (Hetzner → Google Cloud)</h2>
+    <h2>2 · Infraestructura (Hetzner → Google Cloud + streaming)</h2>
     <p class="lead">Estrategia por fases: arrancar barato y robusto en Hetzner mientras el producto madura, y migrar a Google Cloud (managed, autoscaling, multi-región) cuando la escala y la confiabilidad lo justifiquen. Dimensionado para ~100k usuarios activos.</p>
     <table>
       <thead>
@@ -179,11 +181,13 @@
       <tbody>
         <tr><td class="role">Hetzner — meses 1 a 7</td><td class="muted-td">3 app servers, DB primaria + réplica, Redis, load balancer, object storage, backups</td><td class="n">$600</td><td class="n">$4,200</td></tr>
         <tr><td class="role">Google Cloud — meses 8 a 12</td><td class="muted-td">GKE/Compute con autoscaling, Cloud SQL HA, Memorystore, CDN, monitoreo</td><td class="n">$3,000</td><td class="n">$15,000</td></tr>
+        <tr><td class="role">Servidor de streaming <span class="tag">MediaMTX / Owncast</span></td><td class="muted-td">Promedio Hetzner/GCP · supuesto ~10 TB/mes de egress de video</td><td class="n">$590</td><td class="n">$7,080</td></tr>
         <tr><td class="role">Migración (una sola vez)</td><td class="muted-td">Doble operación, egress de datos, setup IaC (Terraform)</td><td class="n">—</td><td class="n">$2,500</td></tr>
-        <tr class="sub"><td colspan="3">Subtotal infraestructura</td><td class="n">$21,700</td></tr>
+        <tr class="sub"><td colspan="3">Subtotal infraestructura</td><td class="n">$28,780</td></tr>
       </tbody>
     </table>
-    <div class="note good"><span class="i">✓</span><div>Como startup, Urbby aplica a <b>Google for Startups Cloud Program</b>, que otorga créditos de hasta ~$100,000 en GCP. Si se aprueban, el gasto de Google del Año 1 queda prácticamente <b>cubierto</b>, reduciendo la infraestructura efectiva a ≈ <b>$6,700</b>. Vale la pena aplicar antes de migrar.</div></div>
+    <div class="note info"><span class="i">▶</span><div><b>Sobre el servidor de streaming (MediaMTX / Owncast):</b> en ambos el CPU/RAM es modesto (un servidor de ~4–8 vCPU basta); <b>el costo lo domina el egress de video</b>. Con el supuesto de ~10 TB/mes: en <b>Hetzner</b> un CPX42 ya incluye 20 TB de tráfico → ≈ <b>$75/mes</b>; en <b>GCP</b> ese mismo tráfico cuesta ≈ <b>$1,100/mes</b> (egress $0.08–$0.12/GB). La línea del presupuesto usa el <b>promedio de ambos (~$590/mes)</b>. Recomendación fuerte: servir el video desde <b>Hetzner o un CDN barato (bunny.net, Cloudflare Stream)</b> y nunca por egress directo de GCP — la diferencia es de ~15×.</div></div>
+    <div class="note good"><span class="i">✓</span><div>Como startup, Urbby aplica a <b>Google for Startups Cloud Program</b>, que otorga créditos de hasta ~$100,000 en GCP. Si se aprueban, el gasto de Google del Año 1 queda prácticamente <b>cubierto</b>, reduciendo la infraestructura efectiva a ≈ <b>$13,780</b>. Vale la pena aplicar antes de migrar.</div></div>
   </section>
 
   <!-- TOOLS -->
@@ -218,22 +222,22 @@
     <table style="margin-bottom:18px">
       <tbody>
         <tr><td class="role">Personal</td><td class="n">$184,320</td></tr>
-        <tr><td class="role">Infraestructura</td><td class="n">$21,700</td></tr>
+        <tr><td class="role">Infraestructura</td><td class="n">$28,780</td></tr>
         <tr><td class="role">Herramientas / SaaS</td><td class="n">$7,784</td></tr>
-        <tr><td class="role">Subtotal</td><td class="n">$213,804</td></tr>
-        <tr><td class="muted-td">Contingencia (10%)</td><td class="n">$21,380</td></tr>
+        <tr><td class="role">Subtotal</td><td class="n">$220,884</td></tr>
+        <tr><td class="muted-td">Contingencia (10%)</td><td class="n">$22,088</td></tr>
       </tbody>
     </table>
     <div class="totgrid">
       <div class="totcard hi">
         <div class="lbl">Total Año 1 · precio de lista</div>
-        <div class="big num">$235,184</div>
-        <div class="sm">≈ $19,599 / mes</div>
+        <div class="big num">$242,972</div>
+        <div class="sm">≈ $20,248 / mes</div>
       </div>
       <div class="totcard">
         <div class="lbl">Total Año 1 · con créditos GCP</div>
-        <div class="big num" style="color:var(--good)">$218,684</div>
-        <div class="sm">≈ $18,224 / mes · escenario optimizado</div>
+        <div class="big num" style="color:var(--good)">$226,472</div>
+        <div class="sm">≈ $18,873 / mes · escenario optimizado</div>
       </div>
     </div>
   </section>
@@ -242,15 +246,15 @@
   <section>
     <h2>Notas y recomendaciones</h2>
     <ul class="recs">
-      <li><b>El equipo es el 78% del costo</b> — cualquier ahorro real viene de decisiones de contratación, no de recortar herramientas. Las licencias completas del stack son ~$8k/año, mucho menos de un mes de nómina.</li>
+      <li><b>El streaming es el comodín del presupuesto.</b> A ~10 TB/mes la diferencia entre Hetzner (~$75/mes) y GCP (~$1,100/mes) es de ~15×, y crece linealmente con las horas vistas. Servir el video desde Hetzner o un CDN de bajo costo (bunny.net, Cloudflare Stream) puede ahorrar miles de dólares al mes frente al egress directo de GCP.</li>
+      <li><b>El equipo es el 76% del costo</b> — cualquier ahorro real viene de decisiones de contratación, no de recortar herramientas. Las licencias completas del stack son ~$8k/año, mucho menos de un mes de nómina.</li>
       <li><b>Dos asistentes de IA en paralelo:</b> el presupuesto incluye Claude Code y ChatGPT/Codex ($20 c/u por dev). Tener ambos da flexibilidad de modelos, pero si se busca recortar, uno solo cubre la mayoría de casos; revisar el uso real tras el primer trimestre.</li>
       <li><b>Aplicar a Google for Startups antes de migrar.</b> Los créditos pueden cubrir casi todo el gasto de GCP del Año 1; sin ellos, considerar quedarse en Hetzner más tiempo, que da excelente relación precio/rendimiento.</li>
-      <li><b>Hetzner sube precios en 2026</b> (varios ajustes anunciados), pero sigue siendo dramáticamente más barato que GCP. La fase 1 en Hetzner es la decisión correcta para conservar caja mientras se valida el producto.</li>
       <li><b>Riesgo del equipo lean:</b> con un solo Fullstack Senior, el desarrollo de features tiene un punto único de falla. Si la tracción crece, la primera contratación adicional recomendada es un <b>segundo Fullstack (mid/senior)</b> en el segundo semestre.</li>
       <li><b>Sin QA ni diseño dedicados:</b> la calidad y la UI recaen en el propio equipo de desarrollo. Es viable en fase temprana, pero conviene reservar presupuesto para QA o diseño (interno o freelance) apenas el producto gane usuarios.</li>
       <li><b>Observabilidad:</b> se retiró Sentry para evitar duplicar con Oh Dear. Ten presente que cubren cosas distintas — Oh Dear vigila uptime/disponibilidad externa, mientras que Sentry captura errores y trazas dentro de la app. Si más adelante hace falta rastrear bugs en producción, evaluar Sentry (tiene plan gratuito) u otra herramienta de error tracking.</li>
       <li><b>Nota sobre salarios:</b> los montos actuales ($3,000–$5,000) son sólidos para el mercado local salvadoreño, pero quedan por debajo de las ofertas remotas de LatAm/US para perfiles senior. Vigilar el riesgo de fuga de talento y contemplar ajustes o equity si aparece competencia por el equipo.</li>
-      <li><b>Costos que escalan con usuarios:</b> Resend (volumen de email) y la infraestructura crecen con la base activa. La cifra de Resend asume ~500k emails/mes; si el volumen sube, evaluar el plan Enterprise o un proveedor con tarifa por volumen.</li>
+      <li><b>Costos que escalan con usuarios:</b> Resend (email), la infraestructura y sobre todo el streaming crecen con la base activa. La cifra de Resend asume ~500k emails/mes; si el volumen sube, evaluar el plan Enterprise o un proveedor con tarifa por volumen.</li>
       <li><b>Contingencia del 10%</b> cubre rotación, ajustes salariales de mitad de año y sobrecostos de la migración. Recomendable no eliminarla.</li>
     </ul>
   </section>
