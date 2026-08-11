@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urbby · Plan de Métricas del Portal Administrativo</title>
+<style>
+  :root, [data-theme="dark"]{
+    --bg-grad:linear-gradient(180deg,#0b1020,#0c1226);
+    --hero-glow:rgba(91,140,255,.22);
+    --panel:#121a30; --panel2:#0f172a; --line:#25314f;
+    --txt:#e8edf7; --muted:#9aa7c2; --brand:#5b8cff; --brand2:#8a6bff;
+    --green:#31d0aa; --amber:#ffb454; --red:#ff6b8a; --chip:#1b2540;
+    --code:#cdd8f2; --code2:#bcc9e6; --why:#c7d2ee;
+    --note-green:#c7f0e6; --note-red:#ffd3dd;
+  }
+  [data-theme="light"]{
+    --bg-grad:linear-gradient(180deg,#f4f6fc,#eef1fa);
+    --hero-glow:rgba(91,140,255,.16);
+    --panel:#ffffff; --panel2:#f5f7fd; --line:#dfe4f2;
+    --txt:#141a2b; --muted:#5a6685; --brand:#3b63d6; --brand2:#6b4bd6;
+    --green:#0f9c80; --amber:#c47e19; --red:#d6435f; --chip:#eef1fb;
+    --code:#2a3350; --code2:#44507a; --why:#3a4570;
+    --note-green:#0c6b57; --note-red:#a52340;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg-grad);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  header.hero{padding:64px 22px 40px;text-align:center;position:relative;
+    background:radial-gradient(1200px 400px at 50% -120px,var(--hero-glow),transparent)}
+  .theme-toggle{position:fixed;top:18px;right:18px;z-index:50;display:flex;align-items:center;gap:7px;
+    background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:999px;
+    padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s,border .2s;
+    box-shadow:0 4px 14px rgba(0,0,0,.15)}
+  .theme-toggle:hover{border-color:var(--brand)}
+  .hero .kicker{color:var(--brand);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+  .hero h1{font-size:38px;line-height:1.15;margin:14px 0 10px;font-weight:800}
+  .hero p{color:var(--muted);max-width:720px;margin:0 auto;font-size:17px}
+  .hero .meta{margin-top:20px;color:var(--muted);font-size:13px}
+  h2.section{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand);
+    margin:56px 0 6px;font-weight:800}
+  h2.section + .lead{color:var(--muted);margin:0 0 22px;font-size:16px;max-width:760px}
+  .grid{display:grid;gap:16px}
+  .grid.two{grid-template-columns:1fr 1fr}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+  .card h3{margin:0 0 4px;font-size:18px;display:flex;align-items:center;gap:10px}
+  .card .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--chip);
+    color:var(--muted);border:1px solid var(--line);letter-spacing:.04em}
+  .card p{margin:6px 0 0;color:var(--muted);font-size:14.5px}
+  .formula{margin-top:14px;background:var(--panel2);border:1px dashed var(--line);border-radius:10px;
+    padding:11px 13px;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--code)}
+  .formula b{color:var(--green)}
+  .src{margin-top:10px;font-size:12.5px;color:var(--muted)}
+  .src b{color:var(--txt);font-weight:600}
+  .why{margin-top:10px;font-size:13.5px;color:var(--why);border-left:3px solid var(--brand2);padding-left:11px}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .pill{font-size:11.5px;background:var(--chip);border:1px solid var(--line);border-radius:8px;
+    padding:5px 9px;color:var(--code2);font-family:ui-monospace,Menlo,monospace}
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  td b{color:var(--txt)}
+  td .mono{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--code2)}
+  .tablecard{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .tablecard tr:last-child td{border-bottom:none}
+  /* roadmap */
+  .phase{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:22px 0;border-top:1px solid var(--line)}
+  .phase .side .badge{font-weight:800;font-size:15px}
+  .phase .side .eff{margin-top:6px;font-size:12.5px;color:var(--muted)}
+  .phase .side .dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:8px}
+  .phase h4{margin:0 0 8px;font-size:17px}
+  .phase ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+  .phase ul li{margin:4px 0}
+  .p0 .dot{background:var(--red)} .p1 .dot{background:var(--amber)}
+  .p2 .dot{background:var(--brand)} .p3 .dot{background:var(--green)}
+  /* ltv vs cac visual */
+  .bars{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin:20px 0 4px;padding:0 6px}
+  .barcol{display:flex;flex-direction:column;align-items:center}
+  .barval{font-weight:800;font-size:15px;margin-bottom:10px}
+  .barval.c-cac{color:var(--red)} .barval.c-ltv{color:var(--green)}
+  .bartrack{width:100%;height:150px;display:flex;align-items:flex-end}
+  .bar{width:100%;border-radius:8px 8px 0 0}
+  .barcap{margin-top:12px;color:var(--muted);font-size:12.5px;text-align:center}
+  .bar.cac{background:linear-gradient(180deg,#ff6b8a,#c23a5a)}
+  .bar.ltv{background:linear-gradient(180deg,#31d0aa,#1a8a72)}
+  .note{background:rgba(49,208,170,.10);border:1px solid rgba(49,208,170,.35);border-radius:12px;
+    padding:14px 16px;color:var(--note-green);font-size:14px;margin-top:30px}
+  .note b{color:var(--note-green)}
+  .note.warn{background:rgba(255,107,138,.10);border-color:rgba(255,107,138,.35);color:var(--note-red)}
+  .note.warn b{color:var(--note-red)}
+  .foot{margin-top:60px;color:var(--muted);font-size:13px;text-align:center;border-top:1px solid var(--line);padding-top:26px}
+  .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .principles .card p{font-size:13.5px}
+  @media(max-width:820px){
+    .grid.two,.grid.three,.principles{grid-template-columns:1fr}
+    .phase{grid-template-columns:1fr;gap:8px}
+    .hero h1{font-size:30px}
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+  <span id="themeIcon">🌙</span><span id="themeLabel">Modo oscuro</span>
+</button>
+
+<header class="hero">
+  <div class="kicker">Urbby · Departamento de Desarrollo</div>
+  <h1>Métricas del Portal Administrativo</h1>
+  <p>Qué debe construir Desarrollo para que, desde el día 1, la junta pueda leer la salud del negocio en tiempo real dentro del portal admin de Urbby.</p>
+  <div class="meta">Presentación para la Junta Directiva · Agosto 2026</div>
+</header>
+
+<div class="wrap">
+
+  <!-- INTRO / PRINCIPIOS -->
+  <h2 class="section">Por qué esto primero</h2>
+  <p class="lead">Ninguna de estas métricas se puede "calcular después". Todas dependen de que cada peso que entra, cada peso que sale, cada lead y cada cliente queden <b>registrados con fecha y categoría desde el primer día</b>. Si no capturamos el dato en el momento, se pierde para siempre.</p>
+  <div class="principles">
+    <div class="card"><h3>1 · Capturar el dato</h3><p>Todo evento de dinero, lead o cliente se guarda con fecha, monto y categoría. Es la base; sin esto no hay métrica.</p></div>
+    <div class="card"><h3>2 · Calcular en vivo</h3><p>El portal deriva las métricas automáticamente por periodo. Cero hojas de cálculo manuales.</p></div>
+    <div class="card"><h3>3 · Decidir con números</h3><p>La junta ve break-even, cash flow y LTV:CAC actualizados, no estimados de memoria.</p></div>
+  </div>
+
+  <!-- ======================= MÉTRICAS EJECUTIVAS ======================= -->
+  <h2 class="section">Métricas ejecutivas (salud del negocio)</h2>
+  <p class="lead">Los cuatro números que la junta debe poder ver en cualquier momento para saber si estamos ganando o perdiendo dinero.</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h3>ROI <span class="tag">Rentabilidad</span></h3>
+      <p>Retorno sobre la inversión: por cada peso invertido, cuánto regresó como ganancia.</p>
+      <div class="formula">ROI = ( <b>Profit</b> − Inversión ) ÷ Inversión × 100</div>
+      <div class="src"><b>Fuente:</b> Revenue y Expense del periodo + capital invertido registrado.</div>
+      <div class="why">Le dice a la junta si el dinero puesto en la empresa está generando retorno o solo consumiéndose.</div>
+      <div class="pill-row"><span class="pill">transactions</span><span class="pill">investments</span></div>
+    </div>
+
+    <div class="card">
+      <h3>Cash Flow <span class="tag">Liquidez</span></h3>
+      <p>Cuánto efectivo real entró menos cuánto salió en el periodo. Distinto a profit: mide si hay dinero en la cuenta hoy.</p>
+      <div class="formula">Cash Flow = <b>Entradas de efectivo</b> − Salidas de efectivo</div>
+      <div class="src"><b>Fuente:</b> transacciones de ingreso y egreso con fecha real de movimiento.</div>
+      <div class="why">Una empresa puede ser rentable en papel y aún así quebrar por quedarse sin efectivo. Esto lo previene.</div>
+      <div class="pill-row"><span class="pill">transactions.date</span><span class="pill">transactions.amount</span></div>
+    </div>
+
+    <div class="card">
+      <h3>CAC vs LTV <span class="tag">Unit economics</span></h3>
+      <p><b>CAC</b>: cuánto cuesta adquirir un cliente. <b>LTV</b>: cuánto deja ese cliente durante toda su vida con nosotros.</p>
+      <div class="formula">CAC = Gasto ventas+marketing ÷ Clientes nuevos<br>LTV = Ingreso prom. cliente × Margen × Vida (meses)<br>Ratio = <b>LTV ÷ CAC</b></div>
+      <div class="src"><b>Fuente:</b> expenses categoría marketing/ventas, conversions, subscriptions, retention.</div>
+      <div class="why warn-note" style="border-color:var(--red)">Si CAC &gt; LTV perdemos dinero en silencio en cada venta. Si LTV &gt; CAC estamos construyendo algo real. La meta sana: LTV:CAC ≥ 3.</div>
+      <div class="pill-row"><span class="pill">expenses</span><span class="pill">conversions</span><span class="pill">subscriptions</span></div>
+    </div>
+
+    <div class="card">
+      <h3>Break-even Point <span class="tag">Punto de equilibrio</span></h3>
+      <p>Cuántas ventas necesitamos para cubrir todos los gastos. Por debajo perdemos, por encima ganamos.</p>
+      <div class="formula">Break-even (ventas) = <b>Costos fijos</b> ÷ (Precio − Costo variable)</div>
+      <div class="src"><b>Fuente:</b> expenses (fijos vs variables), precio de venta promedio.</div>
+      <div class="why">Necesitamos este número visible en todo momento: es la línea que separa perder de ganar cada mes.</div>
+      <div class="pill-row"><span class="pill">expenses.type=fixed</span><span class="pill">expenses.type=variable</span><span class="pill">price</span></div>
+    </div>
+  </div>
+
+  <!-- Visual LTV vs CAC -->
+  <div class="card" style="margin-top:16px">
+    <h3>Cómo se lee LTV vs CAC</h3>
+    <p>Ejemplo ilustrativo. El portal debe mostrar esta relación por periodo y alertar cuando el ratio baje de lo saludable.</p>
+    <div class="bars">
+      <div class="barcol">
+        <div class="barval c-cac">CAC</div>
+        <div class="bartrack"><div class="bar cac" style="height:45%"></div></div>
+        <div class="barcap">Costo de adquirir un cliente</div>
+      </div>
+      <div class="barcol">
+        <div class="barval c-ltv">LTV</div>
+        <div class="bartrack"><div class="bar ltv" style="height:100%"></div></div>
+        <div class="barcap">Valor de vida del cliente</div>
+      </div>
+    </div>
+    <div class="note">✔ LTV mayor que CAC → cada cliente deja más de lo que costó traerlo. Negocio sano.</div>
+    <div class="note warn">✘ Si la barra roja (CAC) supera a la verde (LTV) → estamos pagando por perder clientes. Alerta inmediata.</div>
+  </div>
+
+  <!-- ======================= REPORTERÍA ======================= -->
+  <h2 class="section">Reportería (por periodo de tiempo)</h2>
+  <p class="lead">Los indicadores operativos que alimentan a las métricas ejecutivas. Cada uno debe filtrarse por rango de fechas (día, semana, mes, trimestre) dentro del portal.</p>
+
+  <div class="tablecard">
+    <table>
+      <thead><tr><th style="width:150px">Reporte</th><th>Definición</th><th style="width:230px">Fórmula / origen del dato</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Revenue</b></td>
+          <td>Cuánto dinero entró en el periodo.</td>
+          <td><span class="mono">Σ transactions (tipo = ingreso) en rango</span></td>
+        </tr>
+        <tr>
+          <td><b>Expense</b></td>
+          <td>Cuánto dinero se gastó en el periodo, por categoría.</td>
+          <td><span class="mono">Σ transactions (tipo = egreso) por categoría</span></td>
+        </tr>
+        <tr>
+          <td><b>Profit</b></td>
+          <td>Ganancia real del periodo.</td>
+          <td><span class="mono">Revenue − Expense</span></td>
+        </tr>
+        <tr>
+          <td><b>Leads</b></td>
+          <td>Personas o empresas que mostraron interés en IntellBits.</td>
+          <td><span class="mono">count(leads) creados en rango</span></td>
+        </tr>
+        <tr>
+          <td><b>Conversions</b></td>
+          <td>Leads que se convirtieron en clientes.</td>
+          <td><span class="mono">count(conversions) · tasa = conv ÷ leads</span></td>
+        </tr>
+        <tr>
+          <td><b>CAC</b></td>
+          <td>En promedio, cuánto costó adquirir un cliente.</td>
+          <td><span class="mono">Gasto ventas+mkt ÷ clientes nuevos</span></td>
+        </tr>
+        <tr>
+          <td><b>Retention</b></td>
+          <td>Cuántos clientes decidieron seguir con nosotros.</td>
+          <td><span class="mono">clientes que renovaron ÷ clientes al inicio</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======================= REQUISITOS TÉCNICOS ======================= -->
+  <h2 class="section">Qué debe construir Desarrollo</h2>
+  <p class="lead">La infraestructura de datos que hace posible todo lo anterior. Esto es lo que pedimos priorizar.</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h3>1 · Modelo de datos</h3>
+      <p>Tablas base que todo lo demás usa:</p>
+      <div class="pill-row">
+        <span class="pill">transactions (fecha, monto, tipo, categoría)</span>
+        <span class="pill">customers</span>
+        <span class="pill">subscriptions (inicio, renovación, cancelación)</span>
+        <span class="pill">leads (origen, fecha)</span>
+        <span class="pill">conversions</span>
+        <span class="pill">expenses (fijo / variable · área)</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>2 · Tracking de eventos</h3>
+      <p>Cada evento se registra en el momento en que ocurre:</p>
+      <div class="pill-row">
+        <span class="pill">lead_created</span>
+        <span class="pill">customer_converted</span>
+        <span class="pill">subscription_started</span>
+        <span class="pill">subscription_renewed</span>
+        <span class="pill">subscription_cancelled</span>
+        <span class="pill">payment_received</span>
+        <span class="pill">expense_recorded</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>3 · Integraciones</h3>
+      <p>Conectar las fuentes reales de dinero y demanda para no capturar a mano:</p>
+      <div class="pill-row">
+        <span class="pill">Pasarela de pagos (payments)</span>
+        <span class="pill">Formularios / CRM de leads</span>
+        <span class="pill">Contabilidad / egresos</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>4 · Capa de reportería + UI</h3>
+      <p>El dashboard que consume todo lo anterior:</p>
+      <div class="pill-row">
+        <span class="pill">Selector de periodo (día/semana/mes/Q)</span>
+        <span class="pill">Cálculo automático de KPIs</span>
+        <span class="pill">Alertas (break-even, LTV:CAC, cash flow)</span>
+        <span class="pill">Exportar / comparar periodos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= ROADMAP ======================= -->
+  <h2 class="section">Roadmap por fases</h2>
+  <p class="lead">Orden de entrega recomendado. Las métricas estratégicas dependen de que las fases previas existan, por eso el orden importa.</p>
+
+  <div>
+    <div class="phase p0">
+      <div class="side">
+        <div class="badge"><span class="dot"></span>Fase 0</div>
+        <div class="eff">Fundación · esfuerzo alto</div>
+      </div>
+      <div>
+        <h4>Fundación de datos</h4>
+        <p style="color:var(--muted);margin:0">Sin esto no existe ninguna métrica. Es el prerrequisito de todo.</p>
+        <ul>
+          <li>Esquema de tablas (transactions, customers, leads, subscriptions, expenses)</li>
+          <li>Registro de eventos con fecha, monto y categoría</li>
+          <li>Integración de la pasarela de pagos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase p1">
+      <div class="side">
+        <div class="badge"><span class="dot"></span>Fase 1</div>
+        <div class="eff">Reportería base · esfuerzo medio</div>
+      </div>
+      <div>
+        <h4>Reportería operativa</h4>
+        <p style="color:var(--muted);margin:0">Los números que se pueden calcular directo del dato crudo.</p>
+        <ul>
+          <li>Revenue · Expense · Profit por periodo</li>
+          <li>Cash flow</li>
+          <li>Leads · Conversions y tasa de conversión</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase p2">
+      <div class="side">
+        <div class="badge"><span class="dot"></span>Fase 2</div>
+        <div class="eff">Unit economics · esfuerzo medio</div>
+      </div>
+      <div>
+        <h4>Métricas de cliente</h4>
+        <p style="color:var(--muted);margin:0">Requieren histórico de clientes y suscripciones acumulado.</p>
+        <ul>
+          <li>CAC (costo de adquisición)</li>
+          <li>Retention (renovaciones vs cancelaciones)</li>
+          <li>LTV (valor de vida del cliente)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase p3">
+      <div class="side">
+        <div class="badge"><span class="dot"></span>Fase 3</div>
+        <div class="eff">Estratégicas · esfuerzo medio-bajo</div>
+      </div>
+      <div>
+        <h4>Métricas de dirección + alertas</h4>
+        <p style="color:var(--muted);margin:0">La capa que combina todo lo anterior para la junta.</p>
+        <ul>
+          <li>ROI</li>
+          <li>Break-even point (visible en todo momento)</li>
+          <li>Ratio LTV:CAC con alerta automática</li>
+          <li>Comparación entre periodos y exportación</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:34px">
+    <b>Regla de oro:</b> cada peso, lead y cliente debe registrarse desde el día 1. Las métricas se pueden construir por fases, pero el dato que no capturamos hoy no se recupera mañana.
+  </div>
+
+  <div class="foot">
+    Urbby · Portal Administrativo — Plan de métricas del Departamento de Desarrollo · IntellBits
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  var icon=document.getElementById('themeIcon'), label=document.getElementById('themeLabel');
+  function apply(t){
+    root.setAttribute('data-theme',t);
+    icon.textContent = t==='dark' ? '☀️' : '🌙';
+    label.textContent = t==='dark' ? 'Modo claro' : 'Modo oscuro';
+    try{localStorage.setItem('urbby-theme',t);}catch(e){}
+  }
+  var saved;
+  try{saved=localStorage.getItem('urbby-theme');}catch(e){}
+  if(!saved){
+    saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+  }
+  apply(saved);
+  btn.addEventListener('click',function(){
+    apply(root.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+  });
+})();
+</script>
+</body>
+</html>

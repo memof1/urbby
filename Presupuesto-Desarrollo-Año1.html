@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urbby · Presupuesto Departamento de Desarrollo · Año 1</title>
+<style>
+  :root{
+    --surface-1:#fcfcfb; --page:#f9f9f7;
+    --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --baseline:#c3c2b7; --border:rgba(11,11,11,.10);
+    --s1:#2a78d6; /* personal */
+    --s2:#eb6834; /* infra */
+    --s3:#1baf7a; /* herramientas */
+    --s4:#4a3aa7; /* contingencia */
+    --good:#006300; --warn:#eda100;
+    --card-radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--page); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    line-height:1.5; padding:32px 20px 80px;
+  }
+  .wrap{max-width:1060px;margin:0 auto}
+  .num{font-variant-numeric:tabular-nums}
+  header.top{margin-bottom:26px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#2a78d6,#4a3aa7);
+        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px}
+  h1{font-size:1.55rem;margin:14px 0 4px;letter-spacing:-.02em}
+  .sub{color:var(--ink-2);font-size:1rem;margin:0}
+  .assump{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .chip{background:var(--surface-1);border:1px solid var(--border);border-radius:999px;
+        padding:5px 12px;font-size:.82rem;color:var(--ink-2)}
+  .chip b{color:var(--ink);font-weight:600}
+
+  .heroes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+  .hero{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--card-radius);padding:18px 20px}
+  .hero .k{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+  .hero .v{font-size:2rem;font-weight:700;letter-spacing:-.02em}
+  .hero .v.big{font-size:2.15rem}
+  .hero .cap{font-size:.8rem;color:var(--ink-2);margin-top:4px}
+  .hero.accent{background:linear-gradient(135deg,#f3f7fe,#f7f4fd);border-color:#dbe6f8}
+
+  section{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--card-radius);
+          padding:22px 24px;margin:16px 0}
+  h2{font-size:1.12rem;margin:0 0 4px;letter-spacing:-.01em}
+  .lead{color:var(--ink-2);font-size:.9rem;margin:0 0 16px}
+
+  /* Bar breakdown */
+  .barwrap{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+  .barwrap .seg{position:relative;transition:.2s}
+  .barwrap .seg:not(:last-child){box-shadow:2px 0 0 var(--surface-1)}
+  .legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px}
+  .legend .it{display:flex;align-items:center;gap:8px;font-size:.86rem}
+  .swatch{width:11px;height:11px;border-radius:3px;flex:none}
+  .legend .amt{color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--grid)}
+  th{font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+  td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+  tbody tr:last-child td{border-bottom:none}
+  tr.sub td{font-weight:700;border-top:2px solid var(--baseline);border-bottom:none}
+  .role{font-weight:600}
+  .tag{display:inline-block;font-size:.72rem;padding:1px 8px;border-radius:999px;background:#eef4fd;color:#1c5cab;margin-left:6px}
+  .tag.pt{background:#fdf0e9;color:#b5471f}
+  .muted-td{color:var(--muted)}
+
+  .note{display:flex;gap:10px;background:#fbf7ec;border:1px solid #efe2c2;border-radius:10px;
+        padding:12px 14px;font-size:.86rem;color:#5b4d28;margin-top:14px}
+  .note .i{flex:none;font-weight:800;color:var(--warn)}
+  .note.good{background:#eef7ee;border-color:#cbe6cb;color:#2c5230}
+  .note.good .i{color:var(--good)}
+
+  .totgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .totcard{border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+  .totcard.hi{background:#f3f7fe;border-color:#dbe6f8}
+  .totcard .lbl{font-size:.82rem;color:var(--ink-2);margin-bottom:2px}
+  .totcard .big{font-size:1.7rem;font-weight:700;letter-spacing:-.02em}
+  .totcard .sm{font-size:.82rem;color:var(--muted);margin-top:4px}
+
+  ul.recs{margin:6px 0 0;padding-left:20px;font-size:.9rem;color:var(--ink-2)}
+  ul.recs li{margin-bottom:8px}
+  ul.recs b{color:var(--ink)}
+  footer{color:var(--muted);font-size:.78rem;text-align:center;margin-top:28px}
+  a{color:var(--s1)}
+  @media(max-width:720px){
+    .heroes{grid-template-columns:1fr}
+    .totgrid{grid-template-columns:1fr}
+    h1{font-size:1.3rem}
+    table{font-size:.82rem}
+    th,td{padding:8px 5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand"><div class="logo">U</div><div style="font-weight:700;font-size:1.05rem">Urbby</div></div>
+    <h1>Presupuesto · Departamento de Desarrollo</h1>
+    <p class="sub">Proyección de costos para el <b>Año 1</b> · escenario de <b>100,000 usuarios activos</b></p>
+    <div class="assump">
+      <span class="chip"><b>Moneda:</b> USD</span>
+      <span class="chip"><b>Salarios:</b> mercado El Salvador / LatAm (competitivos)</span>
+      <span class="chip"><b>Equipo:</b> 3 seniors (CTO, Fullstack, DevOps)</span>
+      <span class="chip"><b>Infra:</b> Hetzner → Google Cloud</span>
+      <span class="chip"><b>Elaborado:</b> agosto 2026</span>
+    </div>
+  </header>
+
+  <!-- HERO NUMBERS -->
+  <div class="heroes">
+    <div class="hero accent">
+      <div class="k">Total Año 1 (precio de lista)</div>
+      <div class="v big num">$235,200</div>
+      <div class="cap">≈ $19,600 / mes promedio</div>
+    </div>
+    <div class="hero">
+      <div class="k">Total con créditos GCP</div>
+      <div class="v num" style="color:var(--good)">$218,700</div>
+      <div class="cap">si aplican a Google for Startups</div>
+    </div>
+    <div class="hero">
+      <div class="k">Peso del talento</div>
+      <div class="v num">78%</div>
+      <div class="cap">del presupuesto es personal</div>
+    </div>
+  </div>
+
+  <!-- DISTRIBUTION -->
+  <section>
+    <h2>Distribución del presupuesto</h2>
+    <p class="lead">Como en casi toda empresa de software, el equipo es el costo dominante. Infraestructura y herramientas juntas son ~13%.</p>
+    <div class="barwrap">
+      <div class="seg" style="width:78.4%;background:var(--s1)" title="Personal · $184,320 · 78.4%"></div>
+      <div class="seg" style="width:9.2%;background:var(--s2)" title="Infraestructura · $21,700 · 9.2%"></div>
+      <div class="seg" style="width:3.3%;background:var(--s3)" title="Herramientas / SaaS · $7,784 · 3.3%"></div>
+      <div class="seg" style="width:9.1%;background:var(--s4)" title="Contingencia 10% · $21,380 · 9.1%"></div>
+    </div>
+    <div class="legend">
+      <div class="it"><span class="swatch" style="background:var(--s1)"></span>Personal <span class="amt num">· $184,320</span></div>
+      <div class="it"><span class="swatch" style="background:var(--s2)"></span>Infraestructura <span class="amt num">· $21,700</span></div>
+      <div class="it"><span class="swatch" style="background:var(--s3)"></span>Herramientas <span class="amt num">· $7,784</span></div>
+      <div class="it"><span class="swatch" style="background:var(--s4)"></span>Contingencia <span class="amt num">· $21,380</span></div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section>
+    <h2>1 · Equipo y salarios</h2>
+    <p class="lead">Equipo lean recomendado para operar y escalar el producto con 100k usuarios. Salarios en línea con el mercado salvadoreño/LatAm.</p>
+    <table>
+      <thead>
+        <tr><th>Rol</th><th class="n">Salario mensual</th><th class="n">Anual (12 meses)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="role">CTO <span class="tag">tú</span></td><td class="n">$5,000</td><td class="n">$60,000</td></tr>
+        <tr><td class="role">Desarrollador Fullstack Senior</td><td class="n">$3,000</td><td class="n">$36,000</td></tr>
+        <tr><td class="role">DevOps / SRE Senior</td><td class="n">$4,000</td><td class="n">$48,000</td></tr>
+        <tr><td class="muted-td" colspan="2">Carga patronal y beneficios (ISSS, AFP, aguinaldo, vacaciones) ≈ 28%</td><td class="n">$40,320</td></tr>
+        <tr class="sub"><td>Subtotal personal</td><td class="n"></td><td class="n">$184,320</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><span class="i">!</span><div>El DevOps Senior lleva un salario mayor que el Fullstack porque es un perfil más escaso en el mercado local; es la contratación más difícil de reemplazar. Si el presupuesto aprieta, este rol puede empezar a <b>medio tiempo o por contrato</b> durante los primeros meses en Hetzner y pasar a tiempo completo al migrar a Google Cloud.</div></div>
+  </section>
+
+  <!-- INFRA -->
+  <section>
+    <h2>2 · Infraestructura (Hetzner → Google Cloud)</h2>
+    <p class="lead">Estrategia por fases: arrancar barato y robusto en Hetzner mientras el producto madura, y migrar a Google Cloud (managed, autoscaling, multi-región) cuando la escala y la confiabilidad lo justifiquen. Dimensionado para ~100k usuarios activos.</p>
+    <table>
+      <thead>
+        <tr><th>Fase / componente</th><th>Detalle</th><th class="n">$ / mes</th><th class="n">Anual</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="role">Hetzner — meses 1 a 7</td><td class="muted-td">3 app servers, DB primaria + réplica, Redis, load balancer, object storage, backups</td><td class="n">$600</td><td class="n">$4,200</td></tr>
+        <tr><td class="role">Google Cloud — meses 8 a 12</td><td class="muted-td">GKE/Compute con autoscaling, Cloud SQL HA, Memorystore, CDN, monitoreo</td><td class="n">$3,000</td><td class="n">$15,000</td></tr>
+        <tr><td class="role">Migración (una sola vez)</td><td class="muted-td">Doble operación, egress de datos, setup IaC (Terraform)</td><td class="n">—</td><td class="n">$2,500</td></tr>
+        <tr class="sub"><td colspan="3">Subtotal infraestructura</td><td class="n">$21,700</td></tr>
+      </tbody>
+    </table>
+    <div class="note good"><span class="i">✓</span><div>Como startup, Urbby aplica a <b>Google for Startups Cloud Program</b>, que otorga créditos de hasta ~$100,000 en GCP. Si se aprueban, el gasto de Google del Año 1 queda prácticamente <b>cubierto</b>, reduciendo la infraestructura efectiva a ≈ <b>$6,700</b>. Vale la pena aplicar antes de migrar.</div></div>
+  </section>
+
+  <!-- TOOLS -->
+  <section>
+    <h2>3 · Herramientas y SaaS</h2>
+    <p class="lead">Licencias del stack de desarrollo (equipo de 3 + 1 asiento de reserva). Precios de lista 2026; varias escalan con el uso (email, IA).</p>
+    <table>
+      <thead>
+        <tr><th>Herramienta</th><th>Uso</th><th class="n">$ / mes</th><th class="n">Anual</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="role">Resend</td><td class="muted-td">Email transaccional · plan Scale + overage</td><td class="n">$300</td><td class="n">$3,600</td></tr>
+        <tr><td class="role">Claude Code</td><td class="muted-td">3 devs · plan Pro ($20 c/u)</td><td class="n">$60</td><td class="n">$720</td></tr>
+        <tr><td class="role">ChatGPT / Codex</td><td class="muted-td">3 devs · plan Plus ($20 c/u, incluye Codex)</td><td class="n">$60</td><td class="n">$720</td></tr>
+        <tr><td class="role">Oh Dear</td><td class="muted-td">Uptime & monitoreo · plan Freelance (€49)</td><td class="n">$53</td><td class="n">$636</td></tr>
+        <tr><td class="role">ClickUp</td><td class="muted-td">Business · 4 asientos × $12</td><td class="n">$48</td><td class="n">$576</td></tr>
+        <tr><td class="role">1Password</td><td class="muted-td">Business · 4 × $8 (secretos y accesos)</td><td class="n">$32</td><td class="n">$384</td></tr>
+        <tr><td class="role">Google Workspace</td><td class="muted-td">Correo/Docs · 4 × $7</td><td class="n">$28</td><td class="n">$336</td></tr>
+        <tr><td class="role">Cloudflare</td><td class="muted-td">Pro · CDN, WAF, DNS</td><td class="n">$20</td><td class="n">$240</td></tr>
+        <tr><td class="role">GitHub</td><td class="muted-td">Team · 4 × $4 (repos, CI/CD)</td><td class="n">$16</td><td class="n">$192</td></tr>
+        <tr><td class="role">Figma</td><td class="muted-td">1 editor · UI ocasional del equipo</td><td class="n">$15</td><td class="n">$180</td></tr>
+        <tr><td class="role">Google Analytics 4</td><td class="muted-td">Analítica de producto</td><td class="n">$0</td><td class="n">$0</td></tr>
+        <tr><td class="role">Dominios y misceláneos</td><td class="muted-td">Registros, SSL extra, imprevistos menores</td><td class="n">$17</td><td class="n">$200</td></tr>
+        <tr class="sub"><td colspan="3">Subtotal herramientas</td><td class="n">$7,784</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- TOTALS -->
+  <section>
+    <h2>Resumen anual</h2>
+    <table style="margin-bottom:18px">
+      <tbody>
+        <tr><td class="role">Personal</td><td class="n">$184,320</td></tr>
+        <tr><td class="role">Infraestructura</td><td class="n">$21,700</td></tr>
+        <tr><td class="role">Herramientas / SaaS</td><td class="n">$7,784</td></tr>
+        <tr><td class="role">Subtotal</td><td class="n">$213,804</td></tr>
+        <tr><td class="muted-td">Contingencia (10%)</td><td class="n">$21,380</td></tr>
+      </tbody>
+    </table>
+    <div class="totgrid">
+      <div class="totcard hi">
+        <div class="lbl">Total Año 1 · precio de lista</div>
+        <div class="big num">$235,184</div>
+        <div class="sm">≈ $19,599 / mes</div>
+      </div>
+      <div class="totcard">
+        <div class="lbl">Total Año 1 · con créditos GCP</div>
+        <div class="big num" style="color:var(--good)">$218,684</div>
+        <div class="sm">≈ $18,224 / mes · escenario optimizado</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECS -->
+  <section>
+    <h2>Notas y recomendaciones</h2>
+    <ul class="recs">
+      <li><b>El equipo es el 78% del costo</b> — cualquier ahorro real viene de decisiones de contratación, no de recortar herramientas. Las licencias completas del stack son ~$8k/año, mucho menos de un mes de nómina.</li>
+      <li><b>Dos asistentes de IA en paralelo:</b> el presupuesto incluye Claude Code y ChatGPT/Codex ($20 c/u por dev). Tener ambos da flexibilidad de modelos, pero si se busca recortar, uno solo cubre la mayoría de casos; revisar el uso real tras el primer trimestre.</li>
+      <li><b>Aplicar a Google for Startups antes de migrar.</b> Los créditos pueden cubrir casi todo el gasto de GCP del Año 1; sin ellos, considerar quedarse en Hetzner más tiempo, que da excelente relación precio/rendimiento.</li>
+      <li><b>Hetzner sube precios en 2026</b> (varios ajustes anunciados), pero sigue siendo dramáticamente más barato que GCP. La fase 1 en Hetzner es la decisión correcta para conservar caja mientras se valida el producto.</li>
+      <li><b>Riesgo del equipo lean:</b> con un solo Fullstack Senior, el desarrollo de features tiene un punto único de falla. Si la tracción crece, la primera contratación adicional recomendada es un <b>segundo Fullstack (mid/senior)</b> en el segundo semestre.</li>
+      <li><b>Sin QA ni diseño dedicados:</b> la calidad y la UI recaen en el propio equipo de desarrollo. Es viable en fase temprana, pero conviene reservar presupuesto para QA o diseño (interno o freelance) apenas el producto gane usuarios.</li>
+      <li><b>Observabilidad:</b> se retiró Sentry para evitar duplicar con Oh Dear. Ten presente que cubren cosas distintas — Oh Dear vigila uptime/disponibilidad externa, mientras que Sentry captura errores y trazas dentro de la app. Si más adelante hace falta rastrear bugs en producción, evaluar Sentry (tiene plan gratuito) u otra herramienta de error tracking.</li>
+      <li><b>Nota sobre salarios:</b> los montos actuales ($3,000–$5,000) son sólidos para el mercado local salvadoreño, pero quedan por debajo de las ofertas remotas de LatAm/US para perfiles senior. Vigilar el riesgo de fuga de talento y contemplar ajustes o equity si aparece competencia por el equipo.</li>
+      <li><b>Costos que escalan con usuarios:</b> Resend (volumen de email) y la infraestructura crecen con la base activa. La cifra de Resend asume ~500k emails/mes; si el volumen sube, evaluar el plan Enterprise o un proveedor con tarifa por volumen.</li>
+      <li><b>Contingencia del 10%</b> cubre rotación, ajustes salariales de mitad de año y sobrecostos de la migración. Recomendable no eliminarla.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Urbby · Presupuesto Desarrollo Año 1 · Cifras en USD, precios de lista a agosto 2026 · Documento de planificación interna, sujeto a ajuste.
+  </footer>
+
+</div>
+</body>
+</html>
