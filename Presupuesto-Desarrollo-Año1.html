@@ -3,16 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Urbby · Presupuesto Departamento de Desarrollo · Año 1</title>
+<title>Urbby · Presupuesto Desarrollo (sin planilla) · Año 1</title>
 <style>
   :root{
     --surface-1:#fcfcfb; --page:#f9f9f7;
     --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
     --grid:#e1e0d9; --baseline:#c3c2b7; --border:rgba(11,11,11,.10);
-    --s1:#2a78d6; /* personal */
-    --s2:#eb6834; /* infra */
-    --s3:#1baf7a; /* herramientas */
-    --s4:#4a3aa7; /* contingencia */
+    --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#4a3aa7;
     --good:#006300; --warn:#eda100;
     --card-radius:14px;
   }
@@ -35,6 +32,7 @@
   .chip{background:var(--surface-1);border:1px solid var(--border);border-radius:999px;
         padding:5px 12px;font-size:.82rem;color:var(--ink-2)}
   .chip b{color:var(--ink);font-weight:600}
+  .chip.warn{background:#fbf7ec;border-color:#efe2c2;color:#5b4d28}
 
   .heroes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
   .hero{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--card-radius);padding:18px 20px}
@@ -49,7 +47,6 @@
   h2{font-size:1.12rem;margin:0 0 4px;letter-spacing:-.01em}
   .lead{color:var(--ink-2);font-size:.9rem;margin:0 0 16px}
 
-  /* Bar breakdown */
   .barwrap{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
   .barwrap .seg{position:relative;transition:.2s}
   .barwrap .seg:not(:last-child){box-shadow:2px 0 0 var(--surface-1)}
@@ -66,7 +63,6 @@
   tr.sub td{font-weight:700;border-top:2px solid var(--baseline);border-bottom:none}
   .role{font-weight:600}
   .tag{display:inline-block;font-size:.72rem;padding:1px 8px;border-radius:999px;background:#eef4fd;color:#1c5cab;margin-left:6px}
-  .tag.pt{background:#fdf0e9;color:#b5471f}
   .muted-td{color:var(--muted)}
 
   .note{display:flex;gap:10px;background:#fbf7ec;border:1px solid #efe2c2;border-radius:10px;
@@ -103,12 +99,11 @@
 
   <header class="top">
     <div class="brand"><div class="logo">U</div><div style="font-weight:700;font-size:1.05rem">Urbby</div></div>
-    <h1>Presupuesto · Departamento de Desarrollo</h1>
-    <p class="sub">Proyección de costos para el <b>Año 1</b> · escenario de <b>100,000 usuarios activos</b></p>
+    <h1>Presupuesto · Desarrollo — Costos de operación</h1>
+    <p class="sub">Proyección para el <b>Año 1</b> · <b>100,000 usuarios activos</b> · <b>excluye planilla / salarios</b></p>
     <div class="assump">
       <span class="chip"><b>Moneda:</b> USD</span>
-      <span class="chip"><b>Salarios:</b> mercado El Salvador / LatAm (competitivos)</span>
-      <span class="chip"><b>Equipo:</b> 3 seniors (CTO, Fullstack, DevOps)</span>
+      <span class="chip warn"><b>Sin planilla</b> · solo infra + herramientas</span>
       <span class="chip"><b>Infra:</b> solo Hetzner (app + streaming)</span>
       <span class="chip"><b>Elaborado:</b> agosto 2026</span>
     </div>
@@ -117,62 +112,43 @@
   <!-- HERO NUMBERS -->
   <div class="heroes">
     <div class="hero accent">
-      <div class="k">Total Año 1 (precio de lista)</div>
-      <div class="v big num">$220,200</div>
-      <div class="cap">≈ $18,350 / mes promedio</div>
+      <div class="k">Total Año 1 · sin planilla</div>
+      <div class="v big num">$17,472</div>
+      <div class="cap">≈ $1,456 / mes promedio</div>
     </div>
     <div class="hero">
       <div class="k">Costo mensual promedio</div>
-      <div class="v num">$18,350</div>
-      <div class="cap">nómina + infra + herramientas</div>
+      <div class="v num">$1,456</div>
+      <div class="cap">infra + herramientas + contingencia</div>
     </div>
     <div class="hero">
-      <div class="k">Peso del talento</div>
-      <div class="v num">84%</div>
-      <div class="cap">del presupuesto es personal</div>
+      <div class="k">Infraestructura Hetzner</div>
+      <div class="v num">$8,100</div>
+      <div class="cap">incluye servidor de streaming</div>
     </div>
   </div>
+
+  <div class="note info" style="margin:0 0 8px"><span class="i">▶</span><div><b>Alcance:</b> este presupuesto cubre únicamente <b>infraestructura, herramientas SaaS y contingencia</b>. Los salarios del equipo (planilla) se llevan en un presupuesto aparte y <b>no</b> están incluidos aquí.</div></div>
 
   <!-- DISTRIBUTION -->
   <section>
     <h2>Distribución del presupuesto</h2>
-    <p class="lead">Como en casi toda empresa de software, el equipo es el costo dominante. Con la infraestructura concentrada en Hetzner, infra y herramientas juntas son ~7%.</p>
+    <p class="lead">Sin la planilla, el gasto se reparte casi a partes iguales entre la infraestructura en Hetzner y las licencias del stack de desarrollo.</p>
     <div class="barwrap">
-      <div class="seg" style="width:83.7%;background:var(--s1)" title="Personal · $184,320 · 83.7%"></div>
-      <div class="seg" style="width:3.7%;background:var(--s2)" title="Infraestructura · $8,100 · 3.7%"></div>
-      <div class="seg" style="width:3.5%;background:var(--s3)" title="Herramientas / SaaS · $7,784 · 3.5%"></div>
-      <div class="seg" style="width:9.1%;background:var(--s4)" title="Contingencia 10% · $20,020 · 9.1%"></div>
+      <div class="seg" style="width:46.4%;background:var(--s2)" title="Infraestructura · $8,100 · 46.4%"></div>
+      <div class="seg" style="width:44.5%;background:var(--s3)" title="Herramientas / SaaS · $7,784 · 44.5%"></div>
+      <div class="seg" style="width:9.1%;background:var(--s4)" title="Contingencia 10% · $1,588 · 9.1%"></div>
     </div>
     <div class="legend">
-      <div class="it"><span class="swatch" style="background:var(--s1)"></span>Personal <span class="amt num">· $184,320</span></div>
       <div class="it"><span class="swatch" style="background:var(--s2)"></span>Infraestructura <span class="amt num">· $8,100</span></div>
       <div class="it"><span class="swatch" style="background:var(--s3)"></span>Herramientas <span class="amt num">· $7,784</span></div>
-      <div class="it"><span class="swatch" style="background:var(--s4)"></span>Contingencia <span class="amt num">· $20,020</span></div>
+      <div class="it"><span class="swatch" style="background:var(--s4)"></span>Contingencia <span class="amt num">· $1,588</span></div>
     </div>
-  </section>
-
-  <!-- TEAM -->
-  <section>
-    <h2>1 · Equipo y salarios</h2>
-    <p class="lead">Equipo lean recomendado para operar y escalar el producto con 100k usuarios. Salarios en línea con el mercado salvadoreño/LatAm.</p>
-    <table>
-      <thead>
-        <tr><th>Rol</th><th class="n">Salario mensual</th><th class="n">Anual (12 meses)</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="role">CTO <span class="tag">tú</span></td><td class="n">$5,000</td><td class="n">$60,000</td></tr>
-        <tr><td class="role">Desarrollador Fullstack Senior</td><td class="n">$3,000</td><td class="n">$36,000</td></tr>
-        <tr><td class="role">DevOps / SRE Senior</td><td class="n">$4,000</td><td class="n">$48,000</td></tr>
-        <tr><td class="muted-td" colspan="2">Carga patronal y beneficios (ISSS, AFP, aguinaldo, vacaciones) ≈ 28%</td><td class="n">$40,320</td></tr>
-        <tr class="sub"><td>Subtotal personal</td><td class="n"></td><td class="n">$184,320</td></tr>
-      </tbody>
-    </table>
-    <div class="note"><span class="i">!</span><div>El DevOps Senior lleva un salario mayor que el Fullstack porque es un perfil más escaso en el mercado local; es la contratación más difícil de reemplazar. Si el presupuesto aprieta, este rol puede empezar a <b>medio tiempo o por contrato</b> y pasar a tiempo completo a medida que crece la carga de infraestructura.</div></div>
   </section>
 
   <!-- INFRA -->
   <section>
-    <h2>2 · Infraestructura (solo Hetzner)</h2>
+    <h2>1 · Infraestructura (solo Hetzner)</h2>
     <p class="lead">Toda la infraestructura vive en <b>Hetzner</b> por su relación precio/rendimiento imbatible. Se evaluó Google Cloud pero se descartó para el Año 1: a esta escala —y sobre todo por el egress de video del streaming— resultaba varias veces más caro sin un beneficio proporcional. Dimensionado para ~100k usuarios activos.</p>
     <table>
       <thead>
@@ -184,13 +160,12 @@
         <tr class="sub"><td colspan="3">Subtotal infraestructura</td><td class="n">$8,100</td></tr>
       </tbody>
     </table>
-    <div class="note good"><span class="i">✓</span><div>Concentrar todo en Hetzner baja la infraestructura del Año 1 de ~<b>$28,800</b> (escenario anterior con GCP + migración) a <b>$8,100</b> — un ahorro de ~<b>$20,700</b> anuales, sin sacrificar capacidad para 100k usuarios. Hetzner entrega mucho más cómputo por dólar y su tráfico incluido (20–60 TB según el plan) hace viable el streaming sin costos de egress.</div></div>
     <div class="note info"><span class="i">▶</span><div><b>Servidor de streaming (MediaMTX / Owncast):</b> el CPU/RAM es modesto; el costo lo domina el egress de video. Un CPX42 incluye 20 TB de tráfico/mes, suficiente para el supuesto de ~10 TB de video a ≈$75/mes; el excedente cuesta apenas €1/TB. El mismo tráfico en GCP habría costado ~$1,100/mes — justamente por eso conviene Hetzner para el video. Si el streaming despega fuerte, complementar con un CDN barato (bunny.net, Cloudflare Stream).</div></div>
   </section>
 
   <!-- TOOLS -->
   <section>
-    <h2>3 · Herramientas y SaaS</h2>
+    <h2>2 · Herramientas y SaaS</h2>
     <p class="lead">Licencias del stack de desarrollo (equipo de 3 + 1 asiento de reserva). Precios de lista 2026; varias escalan con el uso (email, IA).</p>
     <table>
       <thead>
@@ -216,24 +191,23 @@
 
   <!-- TOTALS -->
   <section>
-    <h2>Resumen anual</h2>
+    <h2>Resumen anual (sin planilla)</h2>
     <table style="margin-bottom:18px">
       <tbody>
-        <tr><td class="role">Personal</td><td class="n">$184,320</td></tr>
         <tr><td class="role">Infraestructura (Hetzner)</td><td class="n">$8,100</td></tr>
         <tr><td class="role">Herramientas / SaaS</td><td class="n">$7,784</td></tr>
-        <tr><td class="role">Subtotal</td><td class="n">$200,204</td></tr>
-        <tr><td class="muted-td">Contingencia (10%)</td><td class="n">$20,020</td></tr>
+        <tr><td class="role">Subtotal</td><td class="n">$15,884</td></tr>
+        <tr><td class="muted-td">Contingencia (10%)</td><td class="n">$1,588</td></tr>
       </tbody>
     </table>
     <div class="totgrid">
       <div class="totcard hi">
-        <div class="lbl">Total Año 1 · precio de lista</div>
-        <div class="big num">$220,224</div>
-        <div class="sm">≈ $18,352 / mes</div>
+        <div class="lbl">Total Año 1 · sin planilla</div>
+        <div class="big num">$17,472</div>
+        <div class="sm">≈ $1,456 / mes</div>
       </div>
       <div class="totcard">
-        <div class="lbl">Infraestructura anual (solo Hetzner)</div>
+        <div class="lbl">Infraestructura anual (Hetzner)</div>
         <div class="big num" style="color:var(--good)">$8,100</div>
         <div class="sm">vs ~$28,800 en el escenario con GCP</div>
       </div>
@@ -244,21 +218,18 @@
   <section>
     <h2>Notas y recomendaciones</h2>
     <ul class="recs">
+      <li><b>Este presupuesto excluye la planilla.</b> Cubre solo infraestructura, herramientas y contingencia; los salarios del equipo se presupuestan por separado.</li>
       <li><b>Quedarse solo en Hetzner es la decisión correcta para el Año 1.</b> A esta escala entrega mucho más cómputo por dólar que GCP y su tráfico incluido (20–60 TB) elimina el costo de egress, que es el gran enemigo del streaming en la nube. Se ahorran ~$20,700 al año frente al escenario con GCP.</li>
-      <li><b>El equipo es el 84% del costo</b> — cualquier ahorro real viene de decisiones de contratación, no de recortar infra o herramientas. Ambas juntas son ~$16k/año, menos de la mitad de un mes de nómina.</li>
-      <li><b>Contrapartida de Hetzner:</b> es infraestructura más "hands-on" que GCP (menos servicios managed, sin autoscaling nativo, HA que hay que armar). De ahí la importancia del DevOps/SRE Senior: es quien hace que un stack self-managed sea confiable. Documentar todo con IaC (Terraform/Ansible) desde el día uno.</li>
       <li><b>Streaming = el costo que más escala.</b> A ~10 TB/mes son ~$75; el CPX42 incluye 20 TB y el excedente cuesta €1/TB. Si el video despega, complementar con un CDN de bajo costo (bunny.net, Cloudflare Stream) antes que subir de plan sin control.</li>
-      <li><b>Dos asistentes de IA en paralelo:</b> el presupuesto incluye Claude Code y ChatGPT/Codex ($20 c/u por dev). Tener ambos da flexibilidad de modelos; si se busca recortar, uno solo cubre la mayoría de casos. Revisar el uso real tras el primer trimestre.</li>
-      <li><b>Riesgo del equipo lean:</b> con un solo Fullstack Senior, el desarrollo de features tiene un punto único de falla. Si la tracción crece, la primera contratación adicional recomendada es un <b>segundo Fullstack (mid/senior)</b> en el segundo semestre.</li>
-      <li><b>Sin QA ni diseño dedicados:</b> la calidad y la UI recaen en el propio equipo de desarrollo. Es viable en fase temprana, pero conviene reservar presupuesto para QA o diseño (interno o freelance) apenas el producto gane usuarios.</li>
+      <li><b>Hetzner es más "hands-on":</b> menos servicios managed, sin autoscaling nativo, HA que hay que armar. Requiere un perfil DevOps/SRE fuerte (en la planilla, aparte) y documentar todo con IaC (Terraform/Ansible) desde el día uno.</li>
+      <li><b>Dos asistentes de IA en paralelo:</b> Claude Code y ChatGPT/Codex ($20 c/u por dev). Tener ambos da flexibilidad de modelos; si se busca recortar, uno solo cubre la mayoría de casos. Revisar el uso real tras el primer trimestre.</li>
       <li><b>Observabilidad:</b> se retiró Sentry para evitar duplicar con Oh Dear. Cubren cosas distintas — Oh Dear vigila uptime externo, Sentry captura errores y trazas dentro de la app. Si más adelante hace falta rastrear bugs en producción, evaluar Sentry (tiene plan gratuito).</li>
-      <li><b>Nota sobre salarios:</b> los montos actuales ($3,000–$5,000) son sólidos para el mercado local salvadoreño, pero quedan por debajo de las ofertas remotas de LatAm/US para perfiles senior. Vigilar el riesgo de fuga de talento y contemplar ajustes o equity si aparece competencia por el equipo.</li>
-      <li><b>Contingencia del 10%</b> cubre rotación, ajustes salariales de mitad de año e imprevistos de infraestructura. Recomendable no eliminarla.</li>
+      <li><b>Contingencia del 10%</b> cubre imprevistos de infraestructura, overage de tráfico y las alzas de precio de Hetzner anunciadas para 2026. Recomendable no eliminarla.</li>
     </ul>
   </section>
 
   <footer>
-    Urbby · Presupuesto Desarrollo Año 1 · Cifras en USD, precios de lista a agosto 2026 · Documento de planificación interna, sujeto a ajuste.
+    Urbby · Presupuesto Desarrollo Año 1 (sin planilla) · Cifras en USD, precios de lista a agosto 2026 · Documento de planificación interna, sujeto a ajuste.
   </footer>
 
 </div>
